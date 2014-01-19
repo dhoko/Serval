@@ -15,9 +15,9 @@
 
 ### Install the boilerplate
 
-- `make install` (*Install Gulp and bower dependencies*)
+- `./gloups install` (*Install Gulp and bower dependencies*)
 - `gulp`
 
 ### Commands
 
-- `./gloups.sh [Viewname]` to build a view + partial + route
+- `./gloups view [Name]` to build a view + partial + route
