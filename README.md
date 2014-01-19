@@ -9,7 +9,7 @@
 - `git clone git@github.com:dhoko/Gloups.git [folder]` (replace [folder] with a name, it is the destination folder)
 - `cd [folder]`
 
-### Prepare your environement (*First time, if you don't have bower|gulp|livereaload*)
+### Prepare your environement
 
 - Install LiveReload for Chrome [LiveReload Chrome Store](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
