@@ -1,7 +1,7 @@
 {
   "name": "gloups",
   "version": "0.0.0",
-  "description": "Backbone boilerplate with Gulp and Browserify",
+  "description": "Backbone boilerplate with Gulp",
   "main": "index.js",
   "dependencies": {
     "gulp": "~3.4.1"
