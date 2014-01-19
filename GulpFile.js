@@ -7,26 +7,11 @@ var gulp       = require('gulp'),
     concat     = require("gulp-concat"),
     uncss      = require('gulp-uncss'),
     browserify = require('gulp-browserify'),
-    fs         = require('fs');
-
-
-var createServers = function(port, lrport) {
-  var lr = tinylr();
-  lr.listen(lrport, function() {
-    gutil.log('LR Listening on', lrport);
-  });
-
-  var app = express();
-  app.use(express.static(path.resolve('./build/')));
-  app.listen(port, function() {
-    gutil.log('Listening on', port);
-  });
-
-  return {
-    lr: lr,
-    app: app
-  };
-};
+    header     = require('gulp-header'),
+    fs         = require('fs'),
+    es         = require('event-stream'),
+    livereload = require('gulp-livereload'),
+    server = tinylr();
 
 var readJson = function(file) {
   var src = fs.readFileSync(file, 'utf8', function (err,data) {
@@ -40,8 +25,8 @@ var readJson = function(file) {
 }
 
 // Default task : Open url, lauch server, livereaload
-gulp.task('default', function(){
-  var servers = createServers(8080, 35729);
+gulp.task('default',['vendor','templates','scripts','styles'], function() {
+
 
   // Open Google Chrome @ localhost:8080
   gulp.src('./build/index.html')
@@ -51,41 +36,58 @@ gulp.task('default', function(){
       url: "http://localhost:8080/"
    }));
 
-  // Watch changes from CSS/JS/HTML ...
-  gulp.watch([
-    "./**/*",
-    "!./node_modules/**/*",
-    "!./src/vendor/",
-    "!./build/**/*",
-    "!./GulpFile.js"], function(evt) {
-    gutil.log(gutil.colors.cyan(evt.path), 'changed');
-
-    var ext = path.extname(evt.path);
-    (ext === '.js') && gutil.log('JavaScript');
-    (ext === '.css') && gutil.log('css');
-    (ext === '.html') && gutil.log('html');
-    // gulp.run('browserify:dev');
-    // gulp.run('partials:dev');
-    // gulp.run('styles:dev');
-    servers.lr.changed({
-      body: {files: [evt.path]}
+    var app = express();
+    app.use(express.static(path.resolve('./build/')));
+    app.listen(8080, function() {
+      gutil.log('Listening on', 8080);
     });
-  });
+
+
+    // var ext = path.extname(evt.path);
+    // gutil.log(gutil.colors.yellow(ext), 'File extension');
+
+    server.listen(35729, function (err) {
+      if (err) return console.log(err);
+
+      gulp.watch([
+          "./**/*",
+          "!./node_modules/**/*",
+          "!./src/vendor/",
+          "!./build/**/*",
+          "!./GulpFile.js"], function (evt) {
+        gutil.log(gutil.colors.cyan(evt.path), 'changed');
+        gulp.run('scripts');
+        gulp.run('styles');
+        gulp.run('templates');
+      });
+    });
 
 });
 
-gulp.task('styles:dev', function() {
+gulp.task('styles', function() {
   gulp.src('./src/styles/*.css')
     .pipe(concat('main.css'))
-    .pipe(uncss({
-      html : ['./src/index.html','./src/partials/**/*.html']
-    }))
-    .pipe(gulp.dest('./build/styles/'));
+    .pipe(gulp.dest('./build/styles/'))
+    .pipe(livereload(server))
 });
 
-gulp.task('partials:dev', function() {
-  gulp.src(['./src/index.html','./src/partials/**/*.html'])
-    .pipe(gulp.dest('./build'));
+
+gulp.task('templates', function(cb) {
+  return es.concat(
+    gulp.src('./src/partials/**/*.html')
+      .pipe(header('hello'))
+      .pipe(concat('templates.html'))
+      .pipe(gulp.dest('/tmp')),
+    gulp.src([
+      './src/layout/header.html',
+      './src/layout/body.html',
+      '/tmp/templates.html',
+      './src/layout/footer.html',
+    ])
+      .pipe(concat('index.html'))
+      .pipe(gulp.dest('./build'))
+      .pipe(livereload(server))
+  );
 });
 
 
@@ -93,27 +95,40 @@ gulp.task('vendor', function(){
 
   var bowerDep = './' + readJson('./.bowerrc').directory;
 
+  return es.concat(
+    gulp.src([
+      bowerDep + '/jquery/jquery.min.js',
+      bowerDep + '/lodash/dist/lodash.min.js',
+      bowerDep + '/backbone/backbone.min.js',
+    ])
+      .pipe(concat("vendor.min.js"))
+      .pipe(gulp.dest('build/js')),
+    gulp.src(bowerDep + '/normalize-css/normalize.css')
+      .pipe(gulp.dest('build/styles'))
+  );
+
+});
+
+gulp.task('scripts', function(){
   gulp.src([
-    bowerDep + '/jquery/jquery.min.js',
-    bowerDep + '/lodash/dist/lodash.min.js',
-    bowerDep + '/backbone/backbone.min.js',
-  ])
-    .pipe(concat("vendor.min.js"))
-    .pipe(gulp.dest('build/js/'));
+      './src/js/bootstrap.js',
+      './src/js/models/*.js',
+      './src/js/collections/*.js',
+      './src/js/views/*.js',
+      './src/js/routers/*.js',
+      './src/js/app.js',
+    ])
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('./build/js'))
+    .pipe(livereload(server))
 });
 
-gulp.task('browserify:dev', function(){
-  gulp.src('./src/js/app.js')
-    .pipe(browserify())
-    .pipe(gulp.dest('./build/js'));
-});
+// gulp.task('clean', function(){
+//   var spawn = require('child_process').spawn
+//       path  = require("path");
 
-gulp.task('clean', function(){
-  var spawn = require('child_process').spawn
-      path  = require("path");
-
-  spawn('rm', ['-r', path.resolve('.') + '/build'], {stdio: 'inherit'});
-});
+//   spawn('rm', ['-r', path.resolve('.') + '/build'], {stdio: 'inherit'});
+// });
 
 
 // A test https://npmjs.org/package/gulp-template
