@@ -9,6 +9,7 @@
 
     routes: {
       '': 'root',
+      'home': 'home',
       '*path': 'redirect404' // ALWAYS MUST BE THE LAST ROUTE
     },
 
@@ -30,14 +31,20 @@
      */
     after: function() {},
 
-    /**
-     * @return {void}
-     */
     root: function() {
       this.before();
 
       App.Views.Instances.rootIndex = new App.Views.RootIndex();
       App.Views.Instances.rootIndex.render();
+
+      this.after();
+    },
+
+    home: function() {
+      this.before();
+
+      App.Views.Instances.homeIndex = new App.Views.HomeIndex();
+      App.Views.Instances.homeIndex.render();
 
       this.after();
     },
@@ -50,6 +57,6 @@
       console.log('Oops, 404!');
     }
 
-  })
+  });
 
 })(window, window.document, window.app || (window.app = {}));

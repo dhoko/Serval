@@ -9,7 +9,7 @@
 
     el: '#wrapper',
 
-    template: _.template(document.getElementById('#root-viewtpl').innerHTML),
+    template: tpl('root'),
 
     events: {
     },
@@ -18,11 +18,11 @@
     },
 
     render: function() {
-      this.$el.html(this.template);
+      this.$el.html(this.template({name: "Gloups"}));
 
       return this;
     }
-  })
+  });
 
 
-})(window, window.document, window.app || (window.app = {}))
+})(window, window.document, window.app || (window.app = {}));
