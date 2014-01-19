@@ -59,7 +59,11 @@ gulp.task('default', function(){
     "!./build/**/*",
     "!./GulpFile.js"], function(evt) {
     gutil.log(gutil.colors.cyan(evt.path), 'changed');
-    gulp.log(path.extname(evt));
+
+    var ext = path.extname(evt.path);
+    (ext === '.js') && gutil.log('JavaScript');
+    (ext === '.css') && gutil.log('css');
+    (ext === '.html') && gutil.log('html');
     // gulp.run('browserify:dev');
     // gulp.run('partials:dev');
     // gulp.run('styles:dev');
@@ -77,13 +81,11 @@ gulp.task('styles:dev', function() {
       html : ['./src/index.html','./src/partials/**/*.html']
     }))
     .pipe(gulp.dest('./build/styles/'));
-  });
 });
 
 gulp.task('partials:dev', function() {
   gulp.src(['./src/index.html','./src/partials/**/*.html'])
     .pipe(gulp.dest('./build'));
-  });
 });
 
 
