@@ -17,4 +17,4 @@ sed -e "s/==view==/$1/g"  -e "s/==viewlower==/$LOWER/g" <<< "$TPL" > "$VIEWSPATH
 
 echo "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, earum, laudantium, commodi harum illum dolore sed voluptatum possimus qui odit reprehenderit vero ducimus veritatis voluptatem quidem? Ab necessitatibus repellendus perferendis." > "$PARTIALSPATH/$LOWER.html"
 
-sed -e "s/'home': 'home'/'home': 'home',\n\t'$1': '$1'/g" <<< "$ROUTER" > $ROUTERFILE
+sed -e "s/'home': 'home'/'home': 'home',\n\t\t\t'$LOWER': '$LOWER'/g" <<< "$ROUTER" > $ROUTERFILE
