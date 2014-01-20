@@ -20,10 +20,10 @@ var readJson = function(file) {
     return data;
   });
   return JSON.parse(src);
-}
+};
 
 // Default task : Open url, lauch server, livereaload
-gulp.task('default',['vendor','templates','scripts','styles'], function() {
+gulp.task('default',['assets','vendor','templates','scripts','styles'], function() {
 
   // Open Google Chrome @ localhost:8080
   gulp.src('./build/index.html')
@@ -67,18 +67,24 @@ gulp.task('styles', function() {
   gulp.src('./src/styles/*.css')
     .pipe(concat('main.css'))
     .pipe(gulp.dest('./build/styles/'))
-    .pipe(livereload(server))
+    .pipe(livereload(server));
+});
+
+// Build my css
+gulp.task('assets', function() {
+  gulp.src('./src/assets/**/*')
+    .pipe(gulp.dest('./build/assets/'));
 });
 
 gulp.task('scriptsPartials', function() {
     gulp.src('./src/partials/**/*.html')
       .pipe(header('hello'))
       .pipe(concat('templates.html'))
-      .pipe(gulp.dest('./build'))
+      .pipe(gulp.dest('./build'));
   });
 
 // Concatenate your partials and append them to index.html
-gulp.task('templates', ['scriptsPartials'], function(cb) {
+gulp.task('templates', ['scriptsPartials'], function() {
   return es.concat(
     gulp.src([
       './src/layout/header.html',
@@ -99,9 +105,11 @@ gulp.task('vendor', function(){
 
   return es.concat(
     gulp.src([
+      bowerDep + '/kiwapp/kiwapp.min.js',
       bowerDep + '/jquery/jquery.min.js',
       bowerDep + '/lodash/dist/lodash.min.js',
       bowerDep + '/backbone/backbone-min.js',
+      bowerDep + '/scratchcard/scratchcard.min.js',
     ])
       .pipe(concat("vendor.min.js"))
       .pipe(gulp.dest('build/js')),
@@ -115,15 +123,15 @@ gulp.task('vendor', function(){
 gulp.task('scripts', function(){
   gulp.src([
       './src/js/bootstrap.js',
-      './src/js/models/*.js',
-      './src/js/collections/*.js',
-      './src/js/views/*.js',
+      './src/js/models/**/*.js',
+      './src/js/collections/**/*.js',
+      './src/js/views/**/*.js',
       './src/js/routers/*.js',
       './src/js/app.js',
     ])
     .pipe(concat('app.js'))
     .pipe(gulp.dest('./build/js'))
-    .pipe(livereload(server))
+    .pipe(livereload(server));
 });
 
 // remove build folder
