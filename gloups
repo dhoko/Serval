@@ -19,6 +19,9 @@ if [ $1 == "install" ]; then
   bower install --quiet
   echo "> Install npm dependencies"
   npm install --quiet
+  echo Replace  Gulp Header
+  rm -r node_modules/gulp-header/
+  unzip gulp-header.zip -d node_modules/
   echo "> You can."
 fi
 
