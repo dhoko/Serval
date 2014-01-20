@@ -38,5 +38,5 @@ if [ $1 == "view" ]; then
   # sed -e "s/'home': 'home'/'home': 'home',\n\t\t\t'$LOWER': '$LOWER'/g" <<< "$ROUTER" > $ROUTERFILE
   # Create a route
   AST="//==route==//";
-  sed -e "s/'home': 'home'/'home': 'home',\n\t\t\t'$2': '$2'/g" -e "s,$AST,$TPLROUTE,g" -e "s/==view==/$2/g"  -e "s/==viewCapitalize==/$CAPITALIZE/g" <<< "$ROUTER" > $ROUTERFILE
+  sed -e "s/'home': 'home'/'home': 'home',\n\t\t'$2': '$2'/g" -e "s,$AST,$TPLROUTE,g" -e "s/==view==/$2/g"  -e "s/==viewCapitalize==/$CAPITALIZE/g" <<< "$ROUTER" > $ROUTERFILE
 fi

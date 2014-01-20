@@ -1,1 +1,1 @@
-==view==: function() {\n\t\t\tthis.before();\n\n\t\t\tApp.Views.Instances.==view== = new App.Views.==viewCapitalize==();\n\t\t\tApp.Views.Instances.==view==.render();\n\n\t\t\tthis.after();\n\t\t}\,\n\n\t\t//==route==//
+==view==: function() {\n\t\tthis.before();\n\n\t\tApp.Views.Instances.==view== = new App.Views.==viewCapitalize==();\n\t\tApp.Views.Instances.==view==.render();\n\n\t\tthis.after();\n\t\t}\,\n\n\t\t//==route==//

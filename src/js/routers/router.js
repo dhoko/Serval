@@ -10,6 +10,8 @@
     routes: {
       '': 'root',
       'home': 'home',
+		'contactForm2': 'contactForm2',
+			'contactForm': 'contactForm',
       '*path': 'redirect404' // ALWAYS MUST BE THE LAST ROUTE
     },
 
@@ -49,7 +51,25 @@
       this.after();
     },
 
-    //==route==//
+    contactForm: function() {
+			this.before();
+
+			App.Views.Instances.contactForm = new App.Views.ContactForm();
+			App.Views.Instances.contactForm.render();
+
+			this.after();
+		},
+
+		contactForm2: function() {
+		this.before();
+
+		App.Views.Instances.contactForm2 = new App.Views.ContactForm2();
+		App.Views.Instances.contactForm2.render();
+
+		this.after();
+		},
+
+		//==route==//
 
     /**
      * Used when a page isn't found
