@@ -18,6 +18,8 @@
 - `./gloups install` (*Install Gulp and bower dependencies*)
 - `gulp`
 
+**You must extract the gulp-header to node_modules - replace the existing one**
+
 ### Commands
 
 - `./gloups view [Name]` to build a view + partial + route
