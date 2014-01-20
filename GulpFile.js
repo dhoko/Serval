@@ -70,17 +70,20 @@ gulp.task('styles', function() {
     .pipe(livereload(server))
 });
 
-// Concatenate your partials and append them to index.html
-gulp.task('templates', function(cb) {
-  return es.concat(
+gulp.task('scriptsPartials', function() {
     gulp.src('./src/partials/**/*.html')
       .pipe(header('hello'))
       .pipe(concat('templates.html'))
-      .pipe(gulp.dest('/tmp')),
+      .pipe(gulp.dest('./build'))
+  });
+
+// Concatenate your partials and append them to index.html
+gulp.task('templates', ['scriptsPartials'], function(cb) {
+  return es.concat(
     gulp.src([
       './src/layout/header.html',
       './src/layout/body.html',
-      '/tmp/templates.html',
+      './build/templates.html',
       './src/layout/footer.html',
     ])
       .pipe(concat('index.html'))

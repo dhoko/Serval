@@ -4,10 +4,10 @@
   "description": "Backbone boilerplate with Gulp",
   "main": "index.js",
   "dependencies": {
-    "gulp": "~3.4.1"
+    "gulp": "*"
   },
   "devDependencies": {
-    "gulp": "~3.4.1",
+    "gulp": "*",
     "gulp-browserify": "~0.3.3",
     "gulp-concat": "~2.1.7",
     "gulp-rename": "~0.2.2",
