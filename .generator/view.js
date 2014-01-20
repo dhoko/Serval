@@ -5,11 +5,11 @@
    * Root View
    * @type {object}
    */
-  App.Views.==view== = Backbone.View.extend({
+  App.Views.==viewCapitalize== = Backbone.View.extend({
 
     el: '#wrapper',
 
-    template: tpl('==viewlower=='),
+    template: tpl('==view=='),
 
     events: {
     },
