@@ -1,34 +1,32 @@
 {
-  "name": "gloups",
-  "version": "0.0.0",
-  "description": "Backbone boilerplate with Gulp",
-  "main": "index.js",
+  "name": "Gloups",
+  "version": "0.2.0",
+  "description": "App generator with gulp",
+  "main": "gloups.js",
   "dependencies": {
-    "gulp": "*"
+    "cli-color": "~0.2.3",
+    "inquirer": "~0.4.0",
+    "prompt": "~0.2.12",
+    "wrench": "~1.5.6"
   },
-  "devDependencies": {
-    "gulp": "*",
-    "gulp-browserify": "~0.3.3",
-    "gulp-concat": "~2.1.7",
-    "gulp-rename": "~0.2.2",
-    "express": "~3.4.8",
-    "gulp-util": "~2.2.12",
-    "tiny-lr": "0.0.5",
-    "gulp-open": "~0.2.7",
-    "gulp-uncss": "~0.1.6",
-    "event-stream": "~3.1.0",
-    "gulp-header": "~1.0.2",
-    "gulp-livereload": "~0.2.0"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dhoko/Gloups.git"
+  },
   "keywords": [
-    "backbone",
+    "gulp",
     "boilerplate",
-    "browserify",
-    "gulp"
+    "cli",
+    "generator"
   ],
   "author": "dhoko",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dhoko/Gloups/issues"
+  },
+  "homepage": "https://github.com/dhoko/Gloups"
 }

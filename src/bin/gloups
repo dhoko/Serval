@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+
+// "use strict"
+var fs   = require('fs'),
+    path = require('path'),
+    wrench = require('wrench'),
+    inquirer = require('inquirer'),
+    child = require('child_process'),
+    clc = require('cli-color');
+
+var config = {
+  GENERATOR : module.filename.replace('gloups.js','') + "/src/generators/"
+};
+
+var error = function error(err) {
+  if(err) {
+    console.log(clc.red(err));
+    process.exit(0);
+  }
+}
+var success = function success(msg) {
+  console.log(clc.green(msg));
+  process.exit(1);
+}
+
+var installPackages = function installPackages(folder) {
+
+  console.log('Install Node dependencies');
+  child.exec('npm --prefix ./' + folder +' install ./' + folder +' --quiet', function(err) {
+    error(err);
+
+    console.log('Install Bower dependencies');
+    child.exec('cd ./' + folder + ' && bower install --quiet && cd ..', function(err) {
+      error(err);
+      success('Your app is ready');
+    });
+  });
+};
+
+var makeInstall = function makeInstall(opt) {
+
+  console.log(clc.cyan('Create your application : ' + opt.name));
+
+  if(!fs.existsSync('./' + opt.name)){
+    fs.mkdir(opt.name,error);
+  }
+
+  wrench.copyDirRecursive(config.GENERATOR + opt.generator + '/base', './' + opt.name, {
+    excludeHiddenUnix : false,
+    forceDelete : true,
+    preserveFiles:true
+  }, function(err) {
+    error(err);
+    installPackages(opt.name);
+
+  });
+};
+
+
+if(process.argv.length > 2) {
+
+
+  // Read the first additional argument passed to the program
+  var command = process.argv[2];
+
+  if('make' === command) {
+
+    fs.readdir(config.GENERATOR,function(err,files) {
+      files.filter(function(file) {
+        fs.lstat(config.GENERATOR+file, function(err, stats) {
+          if(stats.isDirectory()) {
+            return file;
+          }
+        });
+      });
+
+
+      inquirer.prompt([
+        {
+          type : "input",
+          name : "name",
+          message : "Name of your app :"
+        },
+        {
+          type : "list",
+          name : "generator",
+          message : "Choose a generator :",
+          choices : files
+        }
+      ], function( answers ) {
+          makeInstall(answers);
+      });
+
+    });
+
+} else {
+  error("You must specify an option");
+}
