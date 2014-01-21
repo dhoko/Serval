@@ -3,11 +3,15 @@
  */
 (function(win, doc, App){
 
-  var $doc = $(doc)
+    var swiftclick = SwiftClick.attach (doc.body);
+    swiftclick.addNodeNamesToTrack (["a","button"]);
 
-  $doc.ready(function() {
-    App.Routers.Instances.router = new App.Routers.Router();
-    Backbone.history.start();
-  });
+    var $doc = $(doc);
+
+    $doc.ready(function() {
+        App.Routers.Instances.router = new App.Routers.Router();
+        Backbone.history.start();
+    });
 
 })(window, window.document, window.app || (window.app = {}));
+
