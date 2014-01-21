@@ -12,7 +12,7 @@ Run `npm install`
 
 ### PowerUser mode:on
 
-1. run `echo alias gloups='"$(pwd)"/src/bin/gloups' >> ~/.bashrc && source ~/.bashrc`
+1. run `echo "alias gloups='##gloups##'" >> ~/.bashrc && sed -e "s,##gloups##,"$(echo $(pwd)/src/bin/gloups)",g" <<< "$(cat ~/.bashrc)" > ~/.bashrc && source ~/.bashrc`
 2. `gloups make`
 
 ### Exemple
