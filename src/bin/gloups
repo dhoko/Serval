@@ -15,9 +15,6 @@ var config = {
   GENERATOR : current.join(path.sep) + "/../generators/"
 };
 
-
-
-
 if(process.argv.length > 2) {
 
   // Read the first additional argument passed to the program
