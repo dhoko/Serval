@@ -11,7 +11,6 @@ module.exports = {
     },
     success : function success(msg) {
       console.log(clc.green(msg));
-      process.exit(1);
     },
     info : function info(msg) {
       console.log(clc.cyan(msg));
