@@ -6,7 +6,14 @@ Run `npm install`
 
 ## Create an application
 
+### Fada mode:on
+
 `./src/bin/gloups make`
+
+### PowerUser mode:on
+
+1. run `echo alias gloups='"$(pwd)"/src/bin/gloups' >> ~/.bashrc && source ~/.bashrc`
+2. `gloups make`
 
 ### Exemple
 
