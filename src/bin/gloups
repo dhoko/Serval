@@ -23,14 +23,14 @@ var config = {
   GENERATOR : current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep
 };
 
-if(process.argv.length > 2) {
+if(process.argv.length >= 2) {
 
   // Read the first additional argument passed to the program
   var command = process.argv[2];
 
   if('make' === command) {
 
-    fs.readdir(config.GENERATOR,function(err,files) {
+    fs.readdirSync(config.GENERATOR,function(err,files) {
       files.filter(function(file) {
         fs.lstat(config.GENERATOR+file, function(err, stats) {
           if(stats.isDirectory()) {
@@ -38,6 +38,7 @@ if(process.argv.length > 2) {
           }
         });
       });
+
 
       inquirer.prompt([
         {
