@@ -5,7 +5,7 @@ var gulp       = require('gulp'),
     tinylr     = require('tiny-lr'),
     open       = require("gulp-open"),
     concat     = require("gulp-concat"),
-    header     = require('gulp-header'),
+    partials   = require('gulp-partial-to-script'),
     fs         = require('fs'),
     es         = require('event-stream'),
     livereload = require('gulp-livereload'),
@@ -78,7 +78,7 @@ gulp.task('assets', function() {
 
 gulp.task('scriptsPartials', function() {
     gulp.src('./src/partials/**/*.html')
-      .pipe(header('hello'))
+      .pipe(partials())
       .pipe(concat('templates.html'))
       .pipe(gulp.dest('./build'));
   });
