@@ -54,7 +54,6 @@ gulp.task('default',['assets','vendor','partials','styles'], function() {
           "!./build/**/*",
           "!./GulpFile.js"], function (evt) {
         gutil.log(gutil.colors.cyan(evt.path), 'changed');
-        gulp.run('scripts');
         gulp.run('styles');
         gulp.run('partials');
       });
