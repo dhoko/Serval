@@ -80,5 +80,3 @@ if(process.argv.length > 2) {
 } else {
   error("You must specify an option");
 }
-
-process.exit(1);
