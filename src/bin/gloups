@@ -3,6 +3,7 @@
 var fs          = require('fs'),
     path        = require('path'),
     inquirer    = require('inquirer'),
+    beautify    = require('js-beautify').js_beautify,
     child       = require('child_process'),
     log         = require('../lib/log'),
     makeInstall = require('../lib/makeinstall'),
@@ -46,12 +47,13 @@ if(process.argv.length >= 2) {
     if(fs.existsSync('./.gloups')) {
       var generator = require(process.cwd() + path.sep + '.gloups');
       generator({
-        app     : process.cwd() + path.sep,
-        args    : _args.splice(2),
-        dir     : path.resolve('./.gloups')  + path.sep,
-        success : success,
-        info    : info,
-        error   : error
+        app      : process.cwd() + path.sep,
+        args     : _args.splice(2),
+        dir      : path.resolve('./.gloups')  + path.sep,
+        beautify : beautify,
+        success  : success,
+        info     : info,
+        error    : error
       },inquirer);
     }else{
       error('No generators found for this app');
