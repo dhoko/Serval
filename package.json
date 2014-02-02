@@ -1,7 +1,7 @@
 {
   "name": "Gloups",
   "version": "0.2.0",
-  "description": "App generator with gulp",
+  "description": "Create a webapp must be KISS",
   "main": "gloups.js",
   "dependencies": {
     "cli-color": "~0.2.3",
