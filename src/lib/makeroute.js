@@ -22,7 +22,7 @@ var makeroute = function makeroute(viewName, config) {
           .replace(/==viewCapitalize==/g,tpl.capitalize);
 
     oldContent = oldContent.replace(/\/\/=route=\/\//,content)
-            .replace(/'home': 'home'/,"\t\t'home': 'home' \n '"+tpl.lower+"': '"+tpl.lower+"'");
+            .replace(/'home': 'home'/,"\t\t'home': 'home' \n '"+tpl.lower+"': '"+tpl.lower+"',");
 
     fs.writeFileSync(originalRoutes, oldContent);
 
