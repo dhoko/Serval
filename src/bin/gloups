@@ -17,10 +17,18 @@ current.pop();
 var config = {
   SRC : process.cwd() + path.sep + 'src' +path.sep,
   PARTIALS : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
-  PARTIALS : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
   VIEWS : process.cwd() + path.sep + 'src' +path.sep + 'js' + path.sep + 'views' + path.sep,
   ROUTES : process.cwd() + path.sep + 'src' +path.sep + 'js' + path.sep + 'routers' + path.sep,
   GENERATOR : current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep
+};
+
+var GLOUPS_CONFIG = {
+  module    : current.splice(0,current.indexOf('gloups')).join(path.sep) + path.sep,
+  src       : process.cwd() + path.sep + 'src' +path.sep,
+  partials  : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
+  views     : process.cwd() + path.sep + 'src' +path.sep + 'scripts' + path.sep + 'views' + path.sep,
+  routes    : process.cwd() + path.sep + 'src' +path.sep + 'scripts' + path.sep + 'routers' + path.sep,
+  generator : ""
 };
 
 
@@ -32,15 +40,14 @@ if(process.argv.length >= 2) {
 
   if('debug' === command) {
 
-    var gloupsRoot = current.splice(0,current.indexOf('gloups')).join(path.sep) + path.sep;
-    // // console.log('debug ' + path.resolve(process.cwd() + path.sep +'..' + path.sep));
-    // console.log(require.main.paths);
-    // console.log(current.indexOf('gloups'));
-    console.log(gloupsRoot);
-    // console.log('debug ' + current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep);
-    // return false;
-    fs.readdir(path.resolve(gloupsRoot),function(err,files) {
+    /**
+     * Read inside Gloups install directory/.., it's your global directory.
+     * Then we will find each generators for gloups.
+     * They must be : gloups-[generator name]
+     */
+    fs.readdir(path.resolve(GLOUPS_CONFIG.module),function(err,files) {
 
+      // Filter each folders and list only generators
       files = files.map(function(file) {
         if(file.toLowerCase().indexOf('gloups') > -1) {
           var names = file.split('-');
@@ -50,8 +57,6 @@ if(process.argv.length >= 2) {
           }
         }
       }).filter(function(item) { return item !== undefined;});
-
-      console.log(files);
 
       inquirer.prompt([
         {
@@ -66,8 +71,8 @@ if(process.argv.length >= 2) {
           choices : files
         }
       ], function( answers ) {
-          console.log(answers);
-          console.log(config);
+          GLOUPS_CONFIG.generator = GLOUPS_CONFIG.module + 'gloups-' + answers.generator + path.sep;
+          makeInstall(answers,GLOUPS_CONFIG);
       });
 
     });
