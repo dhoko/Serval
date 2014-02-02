@@ -37,8 +37,8 @@ if(process.argv.length >= 2) {
   // Read the first additional argument passed to the program
   var command = process.argv[2];
 
-
-  if('debug' === command) {
+  // Main command to create an app from a generator
+  if('make' === command) {
 
     /**
      * Read inside Gloups install directory/.., it's your global directory.
@@ -78,37 +78,6 @@ if(process.argv.length >= 2) {
     });
   }
 
-
-  if('make' === command) {
-
-    fs.readdirSync(config.GENERATOR,function(err,files) {
-      files.filter(function(file) {
-        fs.lstat(config.GENERATOR+file, function(err, stats) {
-          if(stats.isDirectory()) {
-            return file;
-          }
-        });
-      });
-
-
-      inquirer.prompt([
-        {
-          type : "input",
-          name : "name",
-          message : "Name of your app :"
-        },
-        {
-          type : "list",
-          name : "generator",
-          message : "Choose a generator :",
-          choices : files
-        }
-      ], function( answers ) {
-          makeInstall(answers,config);
-      });
-
-    });
-  }
 
   if('view' === command) {
 
