@@ -30,13 +30,12 @@ module.exports = function makeInstall(opt, config) {
     fs.mkdir(opt.name,error);
   }
 
-  wrench.copyDirRecursive(config.generator + 'base', './' + opt.name, {
+  wrench.copyDirRecursive(config.generator, './' + opt.name, {
     excludeHiddenUnix : false,
-    forceDelete : true,
-    preserveFiles:true
+    forceDelete       : true,
+    preserveFiles     : true
   }, function(err) {
     error(err);
     installPackages(opt.name);
-
   });
 };

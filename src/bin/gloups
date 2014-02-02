@@ -14,14 +14,16 @@ var fs          = require('fs'),
 
 var current = __filename.split(path.sep);
 current.pop();
-var config = {
-  SRC : process.cwd() + path.sep + 'src' +path.sep,
-  PARTIALS : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
-  VIEWS : process.cwd() + path.sep + 'src' +path.sep + 'js' + path.sep + 'views' + path.sep,
-  ROUTES : process.cwd() + path.sep + 'src' +path.sep + 'js' + path.sep + 'routers' + path.sep,
-  GENERATOR : current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep
-};
 
+/**
+ * Main Gloups configuration
+ *  - module : Directory n-1 where gloups is installed
+ *  - src : Your app src directory
+ *  - partials : Your app partials directory
+ *  - views : Your app views directory
+ *  - routes : Your app routes directory
+ *  - generator : It will be the your current generator
+ */
 var GLOUPS_CONFIG = {
   module    : current.splice(0,current.indexOf('gloups')).join(path.sep) + path.sep,
   src       : process.cwd() + path.sep + 'src' +path.sep,
@@ -36,6 +38,25 @@ if(process.argv.length >= 2) {
 
   // Read the first additional argument passed to the program
   var command = process.argv[2];
+
+  if('debug' === command) {
+    // console.log(process.cwd() + path.sep);
+
+    var _args = process.argv;
+    if(fs.existsSync('./.gloups')) {
+      var generator = require(process.cwd() + path.sep + '.gloups');
+      generator({
+        app     : process.cwd() + path.sep,
+        args    : _args.splice(2),
+        dir     : path.resolve('./.gloups')  + path.sep,
+        success : success,
+        info    : info,
+        error   : error
+      },inquirer);
+    }else{
+      error('No generators found for this app');
+    }
+  }
 
   // Main command to create an app from a generator
   if('make' === command) {
@@ -71,7 +92,7 @@ if(process.argv.length >= 2) {
           choices : files
         }
       ], function( answers ) {
-          GLOUPS_CONFIG.generator = GLOUPS_CONFIG.module + 'gloups-' + answers.generator + path.sep;
+          GLOUPS_CONFIG.generator = GLOUPS_CONFIG.module + 'gloups-' + answers.generator;
           makeInstall(answers,GLOUPS_CONFIG);
       });
 
