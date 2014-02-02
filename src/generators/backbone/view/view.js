@@ -9,7 +9,7 @@
 
     el: '#wrapper',
 
-    template: tpl('==view=='),
+    template: tpl('==viewLower=='),
 
     events: {
     },

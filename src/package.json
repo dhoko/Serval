@@ -1,0 +1,11 @@
+{
+  "name": "Gloups",
+  "version": "0.0.1",
+  "description": "Create a webapp with gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dhoko",
+  "license": "MIT"
+}

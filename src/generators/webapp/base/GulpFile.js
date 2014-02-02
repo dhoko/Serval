@@ -5,10 +5,10 @@ var gulp       = require('gulp'),
     tinylr     = require('tiny-lr'),
     open       = require("gulp-open"),
     concat     = require("gulp-concat"),
-    header     = require('gulp-header'),
     fs         = require('fs'),
     es         = require('event-stream'),
     livereload = require('gulp-livereload'),
+    includes   = require('gulp-file-include'),
     server = tinylr();
 
 // Open a file and return a JSON
@@ -23,7 +23,7 @@ var readJson = function(file) {
 };
 
 // Default task : Open url, lauch server, livereaload
-gulp.task('default',['assets','vendor','templates','scripts','styles'], function() {
+gulp.task('default',['assets','vendor','partials','styles'], function() {
 
   // Open Google Chrome @ localhost:8080
   gulp.src('./build/index.html')
@@ -54,9 +54,8 @@ gulp.task('default',['assets','vendor','templates','scripts','styles'], function
           "!./build/**/*",
           "!./GulpFile.js"], function (evt) {
         gutil.log(gutil.colors.cyan(evt.path), 'changed');
-        gulp.run('scripts');
         gulp.run('styles');
-        gulp.run('templates');
+        gulp.run('partials');
       });
     });
 
@@ -76,27 +75,13 @@ gulp.task('assets', function() {
     .pipe(gulp.dest('./build/assets/'));
 });
 
-gulp.task('scriptsPartials', function() {
+gulp.task('partials', function() {
     gulp.src('./src/partials/**/*.html')
-      .pipe(header('hello'))
-      .pipe(concat('templates.html'))
-      .pipe(gulp.dest('./build'));
+      .pipe(includes())
+      .pipe(gulp.dest('./build'))
+      .pipe(livereload(server));
   });
 
-// Concatenate your partials and append them to index.html
-gulp.task('templates', ['scriptsPartials'], function() {
-  return es.concat(
-    gulp.src([
-      './src/layout/header.html',
-      './src/layout/body.html',
-      './build/templates.html',
-      './src/layout/footer.html',
-    ])
-      .pipe(concat('index.html'))
-      .pipe(gulp.dest('./build'))
-      .pipe(livereload(server))
-  );
-});
 
 // Build your vendors
 gulp.task('vendor', function(){
@@ -106,9 +91,6 @@ gulp.task('vendor', function(){
   return es.concat(
     gulp.src([
       bowerDep + '/kiwapp/kiwapp.min.js',
-      bowerDep + '/jquery/jquery.min.js',
-      bowerDep + '/lodash/dist/lodash.min.js',
-      bowerDep + '/backbone/backbone-min.js',
       bowerDep + '/scratchcard/scratchcard.min.js',
     ])
       .pipe(concat("vendor.min.js"))
@@ -117,21 +99,6 @@ gulp.task('vendor', function(){
       .pipe(gulp.dest('build/styles'))
   );
 
-});
-
-// Concatenate your app and build an app.js
-gulp.task('scripts', function(){
-  gulp.src([
-      './src/js/bootstrap.js',
-      './src/js/models/**/*.js',
-      './src/js/collections/**/*.js',
-      './src/js/views/**/*.js',
-      './src/js/routers/*.js',
-      './src/js/app.js',
-    ])
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest('./build/js'))
-    .pipe(livereload(server));
 });
 
 // remove build folder

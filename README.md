@@ -1,25 +1,22 @@
 # Gloups
 
-> Backbone Boilerplate with Gulp and lodash
+## Installation
 
-## Install it
+Run `npm install`
 
-***You must have node npm and Gulp and Bower***
+## Create an application
 
-- `git clone git@github.com:dhoko/Gloups.git [folder]` (replace [folder] with a name, it is the destination folder)
-- `cd [folder]`
+### Fada mode:on
 
-### Prepare your environement
+`./src/bin/gloups make`
 
-- Install LiveReload for Chrome [LiveReload Chrome Store](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
+### PowerUser mode:on
 
-### Install the boilerplate
+1. run `echo "alias gloups='##gloups##'" >> ~/.bashrc && sed -e "s,##gloups##,"$(echo $(pwd)/src/bin/gloups)",g" <<< "$(cat ~/.bashrc)" > ~/.bashrc && source ~/.bashrc`
+2. `gloups make`
 
-- `./gloups install` (*Install Gulp and bower dependencies*)
-- `gulp`
+### Exemple
 
-**You must extract the gulp-header to node_modules - replace the existing one**
+I've cloned the repository in `/home/dhoko/dev/Gloups/`, so the binary is in `/home/dhoko/dev/Gloups/src/bin/`.
 
-### Commands
-
-- `./gloups view [Name]` to build a view + partial + route
+To setup an app (*in any folder*), run `./home/dhoko/dev/Gloups/src/bin/gloups make`

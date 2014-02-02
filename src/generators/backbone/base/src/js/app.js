@@ -3,9 +3,6 @@
  */
 (function(win, doc, App){
 
-    var swiftclick = SwiftClick.attach (doc.body);
-    swiftclick.addNodeNamesToTrack (["a","button"]);
-
     var $doc = $(doc);
 
     $doc.ready(function() {

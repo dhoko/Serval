@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+// "use strict"
+var fs          = require('fs'),
+    path        = require('path'),
+    inquirer    = require('inquirer'),
+    child       = require('child_process'),
+    log         = require('../lib/log'),
+    makeInstall = require('../lib/makeinstall'),
+    makeView    = require('../lib/makeview'),
+    makeroute   = require('../lib/makeroute'),
+    success     = log.success,
+    info        = log.info,
+    error       = log.error;
+
+var current = __filename.split(path.sep);
+current.pop();
+var config = {
+  SRC : process.cwd() + path.sep + 'src' +path.sep,
+  PARTIALS : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
+  PARTIALS : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
+  VIEWS : process.cwd() + path.sep + 'src' +path.sep + 'js' + path.sep + 'views' + path.sep,
+  ROUTES : process.cwd() + path.sep + 'src' +path.sep + 'js' + path.sep + 'routers' + path.sep,
+  GENERATOR : current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep
+};
+
+if(process.argv.length >= 2) {
+
+  // Read the first additional argument passed to the program
+  var command = process.argv[2];
+
+  if('make' === command) {
+
+    fs.readdirSync(config.GENERATOR,function(err,files) {
+      files.filter(function(file) {
+        fs.lstat(config.GENERATOR+file, function(err, stats) {
+          if(stats.isDirectory()) {
+            return file;
+          }
+        });
+      });
+
+
+      inquirer.prompt([
+        {
+          type : "input",
+          name : "name",
+          message : "Name of your app :"
+        },
+        {
+          type : "list",
+          name : "generator",
+          message : "Choose a generator :",
+          choices : files
+        }
+      ], function( answers ) {
+          makeInstall(answers,config);
+      });
+
+    });
+  }
+
+  if('view' === command) {
+
+    var viewName = process.argv[3];
+    if(!viewName) {
+      error('You must give a view name');
+    }
+
+    makeView(viewName,config);
+    makeroute(viewName,config);
+
+    var lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis, voluptates, doloremque. Rerum, illum, fugiat nemo natus aperiam nesciunt provident excepturi quo suscipit earum maiores placeat reiciendis ipsa eum numquam aliquid.';
+
+    child.exec('echo ' + lorem + ' > ' + config.PARTIALS + viewName.toLowerCase() +'.html', function(err) {
+      error(err);
+    });
+    success('Your partial view is ready');
+
+  }
+
+} else {
+  error("You must specify an option");
+}
