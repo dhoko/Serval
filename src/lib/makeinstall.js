@@ -26,17 +26,16 @@ module.exports = function makeInstall(opt, config) {
 
   info('Create your application : ' + opt.name);
 
-  if(!fs.existsSync('./' + opt.name)){
+  if(!fs.existsSync('./' + opt.name)) {
     fs.mkdir(opt.name,error);
   }
 
-  wrench.copyDirRecursive(config.GENERATOR + opt.generator + '/base', './' + opt.name, {
+  wrench.copyDirRecursive(config.generator, './' + opt.name, {
     excludeHiddenUnix : false,
-    forceDelete : true,
-    preserveFiles:true
+    forceDelete       : true,
+    preserveFiles     : true
   }, function(err) {
     error(err);
     installPackages(opt.name);
-
   });
 };
