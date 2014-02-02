@@ -23,10 +23,56 @@ var config = {
   GENERATOR : current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep
 };
 
+
 if(process.argv.length >= 2) {
 
   // Read the first additional argument passed to the program
   var command = process.argv[2];
+
+
+  if('debug' === command) {
+
+    var gloupsRoot = current.splice(0,current.indexOf('gloups')).join(path.sep) + path.sep;
+    // // console.log('debug ' + path.resolve(process.cwd() + path.sep +'..' + path.sep));
+    // console.log(require.main.paths);
+    // console.log(current.indexOf('gloups'));
+    console.log(gloupsRoot);
+    // console.log('debug ' + current.join(path.sep) + path.sep + ".." + path.sep + 'generators' + path.sep);
+    // return false;
+    fs.readdir(path.resolve(gloupsRoot),function(err,files) {
+
+      files = files.map(function(file) {
+        if(file.toLowerCase().indexOf('gloups') > -1) {
+          var names = file.split('-');
+          if(names.length > 1) {
+            names.shift();
+            return names.join('-');
+          }
+        }
+      }).filter(function(item) { return item !== undefined;});
+
+      console.log(files);
+
+      inquirer.prompt([
+        {
+          type : "input",
+          name : "name",
+          message : "Name of your app :"
+        },
+        {
+          type : "list",
+          name : "generator",
+          message : "Choose a generator :",
+          choices : files
+        }
+      ], function( answers ) {
+          console.log(answers);
+          console.log(config);
+      });
+
+    });
+  }
+
 
   if('make' === command) {
 
