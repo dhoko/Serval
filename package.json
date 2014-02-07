@@ -2,6 +2,7 @@
   "name": "Gloups",
   "version": "0.2.0",
   "description": "Create a webapp must be KISS",
+  "author": "dhoko",
   "main": "gloups.js",
   "dependencies": {
     "cli-color": "~0.2.3",
@@ -11,6 +12,9 @@
     "js-beautify": "~1.4.2"
   },
   "devDependencies": {},
+  "bin": {
+    "gloups": "./bin/gloups"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,13 +23,17 @@
     "url": "git@github.com:dhoko/Gloups.git"
   },
   "keywords": [
-    "gulp",
-    "boilerplate",
+    "front-end",
+    "development",
+    "scaffold",
+    "tool",
+    "dev",
+    "build",
     "cli",
     "generator"
   ],
   "author": "dhoko",
-  "license": "MIT",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/dhoko/Gloups/issues"
   },
