@@ -8,7 +8,7 @@
 
 ## API
 
-´serval make´
+`serval make`
 
 Create an application based on a generator. You set the name of your app then you choose your generator and it's done.
 
