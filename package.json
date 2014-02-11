@@ -1,6 +1,6 @@
 {
   "name": "serval",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create a webapp must be KISS",
   "author": "dhoko",
   "main": "serval.js",
