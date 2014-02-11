@@ -21,7 +21,7 @@ current.pop();
  *  - routes : Your app routes directory
  *  - generator : It will be the your current generator
  */
-var GLOUPS_CONFIG = {
+var SERVAL_CONFIG = {
   module    : current.splice(0,current.indexOf('gloups')).join(path.sep) + path.sep,
   src       : process.cwd() + path.sep + 'src' +path.sep,
   partials  : process.cwd() + path.sep + 'src' +path.sep + 'partials' + path.sep,
@@ -37,15 +37,15 @@ if(process.argv.length > 2) {
   var command = process.argv[2];
 
   // Main command to execute a custom generator
-  if('generator' === command) {
+  if('generate' === command) {
 
     var _args = process.argv;
-    if(fs.existsSync('./.gloups')) {
-      var generator = require(process.cwd() + path.sep + '.gloups');
+    if(fs.existsSync('./.serval')) {
+      var generator = require(process.cwd() + path.sep + '.serval');
       generator({
         app  : process.cwd() + path.sep,
         args : _args.splice(2),
-        dir  : path.resolve('./.gloups')  + path.sep
+        dir  : path.resolve('./.serval')  + path.sep
       },{
         beautify : beautify,
         inquirer : inquirer,
@@ -66,11 +66,11 @@ if(process.argv.length > 2) {
      * Then we will find each generators for gloups.
      * They must be : gloups-[generator name]
      */
-    fs.readdir(path.resolve(GLOUPS_CONFIG.module),function(err,files) {
+    fs.readdir(path.resolve(SERVAL_CONFIG.module),function(err,files) {
 
       // Filter each folders and list only generators
       files = files.map(function(file) {
-        if(file.toLowerCase().indexOf('gloups') > -1) {
+        if(file.toLowerCase().indexOf('serval') > -1) {
           var names = file.split('-');
           if(names.length > 1) {
             names.shift();
@@ -92,8 +92,8 @@ if(process.argv.length > 2) {
           choices : files
         }
       ], function( answers ) {
-          GLOUPS_CONFIG.generator = GLOUPS_CONFIG.module + 'gloups-' + answers.generator;
-          makeInstall(answers,GLOUPS_CONFIG);
+          SERVAL_CONFIG.generator = SERVAL_CONFIG.module + 'serval-' + answers.generator;
+          makeInstall(answers,SERVAL_CONFIG);
       });
 
     });
@@ -103,8 +103,8 @@ if(process.argv.length > 2) {
 
   console.log();
   info("You can use the following commands :");
-  console.log(" > gloups make : create an application");
-  console.log(" > gloups generator : execute a custom generator");
+  console.log(" > serval make : create an application");
+  console.log(" > serval generator : execute a custom generator");
   console.log();
   error("You must specify an option");
 }

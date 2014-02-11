@@ -1,9 +1,9 @@
 {
-  "name": "Gloups",
-  "version": "0.2.0",
+  "name": "Serval",
+  "version": "1.0.0",
   "description": "Create a webapp must be KISS",
   "author": "dhoko",
-  "main": "gloups.js",
+  "main": "serval.js",
   "dependencies": {
     "cli-color": "~0.2.3",
     "inquirer": "~0.4.0",
@@ -13,14 +13,14 @@
   },
   "devDependencies": {},
   "bin": {
-    "gloups": "./bin/gloups"
+    "serval": "./bin/serval"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:dhoko/Gloups.git"
+    "url": "git@github.com:dhoko/Serval.git"
   },
   "keywords": [
     "front-end",
@@ -35,7 +35,7 @@
   "author": "dhoko",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/dhoko/Gloups/issues"
+    "url": "https://github.com/dhoko/Serval/issues"
   },
-  "homepage": "https://github.com/dhoko/Gloups"
+  "homepage": "https://github.com/dhoko/Serval"
 }
