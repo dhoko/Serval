@@ -1,6 +1,6 @@
 {
   "name": "serval",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create a webapp must be KISS",
   "author": "dhoko",
   "main": "serval.js",
@@ -13,7 +13,7 @@
   },
   "devDependencies": {},
   "bin": {
-    "serval": "./bin/serval"
+    "serval": "serval.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
