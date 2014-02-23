@@ -1,6 +1,7 @@
 # Serval
 
-> Create a webapp must be KISS
+> A scaffolding tool for your webapp.
+
 
 ## How to install
 
@@ -17,6 +18,10 @@ Create an application based on a generator. You set the name of your app then yo
 `serval generate`
 
 List each options for your current generator. So you can run anything attach to your current generator.
+
+`serval list`
+
+List all the generators.
 
 ## Build a Serval generator
 
