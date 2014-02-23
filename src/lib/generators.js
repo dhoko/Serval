@@ -1,15 +1,16 @@
 "use strict";
-var fs       = require('fs'),
-    path     = require('path'),
-    wrench   = require('wrench'),
-    child    = require('child_process'),
-    log      = require('./log'),
+var log      = require('./log'),
     request  = require('request'),
     success  = log.success,
     info     = log.info,
     error    = log.error;
 
-
+/**
+ * List all of our generators from NPM thanks to a tag
+ * To be listed you must add "serval-generator" in your tags.
+ * @param  {Function} cb Callback trigger when we find them
+ * @return {void}
+ */
 module.exports = function listGenerators(cb) {
 
   var url = "http://isaacs.iriscouch.com/registry/_design/app/_view/byKeyword?startkey=[%22serval-generator%22]&endkey=[%22serval-generator%22,{}]&group_level=3",
@@ -18,10 +19,7 @@ module.exports = function listGenerators(cb) {
   info(" > Try to find our generators from NPM...");
 
   request(url, function (err, response, body) {
-
-    if(err) {
-      error(error);
-    }
+    error(err);
 
     if (200 == response.statusCode) {
       var rep = JSON.parse(body);

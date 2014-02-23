@@ -1,7 +1,7 @@
 {
   "name": "serval",
-  "version": "1.0.3",
-  "description": "Create a webapp must be KISS",
+  "version": "1.1.0",
+  "description": "A scaffolding tool for your webapp",
   "author": "dhoko",
   "main": "serval.js",
   "dependencies": {
@@ -10,7 +10,8 @@
     "prompt": "~0.2.12",
     "wrench": "~1.5.6",
     "js-beautify": "~1.4.2",
-    "request": "~2.34.0"
+    "request": "~2.34.0",
+    "shelljs": "~0.2.6"
   },
   "devDependencies": {},
   "bin": {
